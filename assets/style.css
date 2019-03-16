@@ -1,0 +1,21 @@
+body{
+    background: gray;
+}
+
+.main{
+    position: relative;
+    top: 15px;
+    background: white;
+
+}
+
+.map{
+    background: white;
+    height: 500px;
+}
+
+.formPost{
+    border-left: 3px solid grey;
+   
+    background: white;
+}
