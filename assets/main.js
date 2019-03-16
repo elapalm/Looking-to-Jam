@@ -1,6 +1,4 @@
 $(document).ready(function () {
-  console.log("This is only a test");
-
 
   // Initialize Firebase
   var config = {
@@ -11,33 +9,27 @@ $(document).ready(function () {
     storageBucket: "p1-looking-to-jam.appspot.com",
     messagingSenderId: "618958973185"
   };
-  firebase.initializeApp(config); //does not like this????
+  //initialize firebase.
+  firebase.initializeApp(config);
 
-  var userData = firebase.database
-  //user values
-  var userName = "";
-  var instrument = "";
-  var addressMain = "";
-  var address2 = "";
-  var usercity = "";
-  var userState = "";
-  var userZip = "";
+  //database variable
+  const database = firebase.database();
 
-
-  // user sign in 
+  // user sign in listner
   $("#sign-in").on("click", function (event) {
     event.preventDefault();
 
-    userName = $("#inputUserName4").val().trim();
-    instrument = $("#inputInstrument4").val().trim();
-    addressMain = $("#inputAddress").val().trim();
-    address2 = $("#inputAddress2").val().trim();
-    usercity = $("#inputCity").val().trim();
-    userState = $("#inputState").val().trim();
-    userZip = $("#inputZip").val().trim();
+    //user values
+    let userName = $("#inputUserName4").val().trim();
+    let instrument = $("#inputInstrument4").val().trim();
+    let addressMain = $("#inputAddress").val().trim();
+    let address2 = $("#inputAddress2").val().trim();
+    let usercity = $("#inputCity").val().trim();
+    let userState = $("#inputState").val().trim();
+    let userZip = $("#inputZip").val().trim();
 
     // user info object
-    var database = {
+    let userData = {
       userName: userName,
       instrument: instrument,
       addressMain: addressMain,
@@ -45,12 +37,12 @@ $(document).ready(function () {
       usercity: usercity,
       userState: userState,
       userZip: userZip,
-    }
+    }//end of userData Object
 
+    //push information to the database
     database.ref().push(userData);
-  });//end of sign in object
-
-
+    
+  });//end of sign in listner
 
 });//end of document.ready
 
