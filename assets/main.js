@@ -16,7 +16,7 @@ $(document).ready(function () {
   const database = firebase.database();
   let counter = 0;
   // user sign in listner
-  $("#sign-in").on("click", function (event) {
+  $("#sign-in").on("click", function (event) { window.location = "/profile-page"
     event.preventDefault();
 
     //user values
