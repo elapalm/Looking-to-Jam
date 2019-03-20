@@ -16,7 +16,7 @@ $(document).ready(function () {
   const database = firebase.database();
 
   // user sign in listner
-  $("#sign-in").on("click", function (event) {
+  $("#sign-in").on("click", function (event) { window.location = "/profile-page"
     event.preventDefault();
 
     //user values
@@ -45,8 +45,3 @@ $(document).ready(function () {
   });//end of sign in listner
 
 });//end of document.ready
-
-
-
-
-
