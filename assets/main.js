@@ -9,8 +9,17 @@ $(document).ready(function () {
     storageBucket: "p1-looking-to-jam.appspot.com",
     messagingSenderId: "618958973185"
   };
-  //initialize firebase.
   firebase.initializeApp(config);
+
+  const database = firebase.database
+  //user values
+  var userName = "";
+  var instrument = "";
+  var addressMain = "";
+  var address2 = "";
+  var usercity = "";
+  var userState = "";
+  var userZip = "";
 
   //database variable
   const database = firebase.database();
