@@ -9,17 +9,19 @@ $(document).ready(function () {
     storageBucket: "p1-looking-to-jam.appspot.com",
     messagingSenderId: "618958973185"
   };
-  //initialize firebase.
   firebase.initializeApp(config);
+
 
   //database variable
   const database = firebase.database();
-
+  let counter = 0;
   // user sign in listner
-  $("#sign-in").on("click", function (event) {
+  $("#sign-in").on("click", function (event) { window.location = "/profile-page"
     event.preventDefault();
 
     //user values
+  
+
     let userName = $("#inputUserName4").val().trim();
     let instrument = $("#inputInstrument4").val().trim();
     let addressMain = $("#inputAddress").val().trim();
@@ -40,20 +42,8 @@ $(document).ready(function () {
     }//end of userData Object
 
     //push information to the database
-    database.ref().push(userData);
-
+    database.ref().child("/users/user" + counter++).set(userData);
+    
   });//end of sign in listner
 
 });//end of document.ready
-
-
-
-
-
-
-
-
-
-
-
-
