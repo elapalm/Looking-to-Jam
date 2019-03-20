@@ -41,10 +41,17 @@ $(document).ready(function () {
 
     //push information to the database
     database.ref().push(userData);
-    
+
   });//end of sign in listner
 
 });//end of document.ready
+
+
+
+
+
+
+
 
 
 
