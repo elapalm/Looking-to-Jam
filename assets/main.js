@@ -11,24 +11,17 @@ $(document).ready(function () {
   };
   firebase.initializeApp(config);
 
-  const database = firebase.database
-  //user values
-  var userName = "";
-  var instrument = "";
-  var addressMain = "";
-  var address2 = "";
-  var usercity = "";
-  var userState = "";
-  var userZip = "";
 
   //database variable
   const database = firebase.database();
-
+  let counter = 0;
   // user sign in listner
-  $("#sign-in").on("click", function (event) { window.location = "/profile-page"
+  $("#sign-in").on("click", function (event) {
     event.preventDefault();
 
     //user values
+  
+
     let userName = $("#inputUserName4").val().trim();
     let instrument = $("#inputInstrument4").val().trim();
     let addressMain = $("#inputAddress").val().trim();
@@ -49,7 +42,7 @@ $(document).ready(function () {
     }//end of userData Object
 
     //push information to the database
-    database.ref().push(userData);
+    database.ref().child("/users/user" + counter++).set(userData);
     
   });//end of sign in listner
 
