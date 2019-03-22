@@ -13,9 +13,9 @@ $(document).ready(function () {
 
     //display user information on html page
 
-    let userDataRef = firebase.database().ref(userData).orderByKey();
+    let userDataRef = firebase.database().ref("userData").orderByKey();
     userDataRef.once("value").then(function(snapshot){
-      snapshot.forEach(function(snapshot){
+      snapshot.forEach(function(childSnapshot){
 
         var userNameVal = childSnapshot.val().userName;
 
@@ -25,7 +25,7 @@ $(document).ready(function () {
         
 
 
-    //add user information- about, instrument, skill level, genre, links to music
+    /*add user information- about, instrument, skill level, genre, links to music
     function editable() {
         var h1 = document.getElementsByTagName("H1")[0];
         var att = document.createAttribute("contenteditable");
@@ -45,7 +45,7 @@ $(document).ready(function () {
       $('.my-button2').click(function() {
         $(".button").focus()
       });
-
+    
 
     
 });//end of document.ready
