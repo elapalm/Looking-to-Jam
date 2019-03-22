@@ -20,7 +20,7 @@ $(document).ready(function () {
     event.preventDefault();
 
     //user values
-  
+
 
     let userName = $("#inputUserName4").val().trim();
     let instrument = $("#inputInstrument4").val().trim();
@@ -48,7 +48,7 @@ $(document).ready(function () {
 
     //push information to the database
     database.ref().child("/users/user" + counter++).set(userData);
-    
+
     $("#inputUserName4").val("");
     $("#inputInstrument4").val("");
     $("#inputAddress").val("");
@@ -63,8 +63,8 @@ $(document).ready(function () {
 
 
   //database listener when a user is added to the database
-  database.ref("/users/").on("child_added",function(snapshot){
-    
+  database.ref("/users/").on("child_added", function (snapshot) {
+
     //created needed divs
     let newRow = $("<div>");
     let newFormDiv = $("<div>");
@@ -76,8 +76,8 @@ $(document).ready(function () {
     newuserNameDiv.attr("class", "col-sm-3");
 
     //pull data need to post to the data base.
-    newFormDiv.html("<h4>" + snapshot.val().adSub + "</h4> <hr> <p>" +snapshot.val().comment +"</p>");
-    newuserNameDiv.html("<h4>" +snapshot.val().userName + "</h4>");
+    newFormDiv.html("<h4>" + snapshot.val().adSub + "</h4> <hr> <p>" + snapshot.val().comment + "</p>");
+    newuserNameDiv.html("<h4>" + snapshot.val().userName + "</h4>");
 
     //append col to the row that will be added to the page
     newRow.append(newFormDiv);
@@ -87,5 +87,29 @@ $(document).ready(function () {
     $(".forum").append(newRow);
 
   });
+
+  //Google geolocation API
+  let address = "3135 N Palo Verde Ave, Tucson AZ";
+
+  queryURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyDTD77T70LdIBZsEwh1nXNqGor3B0oQbYk";
+
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  })
+    .then(function (response) {
+      let lat = response.results[0].geometry.location.lat;
+
+      let lng = response.results[0].geometry.location.lng;
+
+      console.log("Lat: " + lat + " Lng: " + lng);
+
+    })
+    .catch(function(error){
+      console.log(error);
+    });
+
+ 
+
 
 });//end of document.ready
