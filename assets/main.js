@@ -16,7 +16,7 @@ $(document).ready(function () {
   const database = firebase.database();
   let counter = 0;
   // user sign in listner
-  $("#sign-in").on("click", function (event) { window.location = "/profile-page"
+  $("#sign-in").on("click", function (event) {
     event.preventDefault();
 
     //user values
@@ -29,6 +29,8 @@ $(document).ready(function () {
     let usercity = $("#inputCity").val().trim();
     let userState = $("#inputState").val().trim();
     let userZip = $("#inputZip").val().trim();
+    let adSub = $("#ad-subject").val().trim();
+    let comment = $("#comments").val().trim();
 
     // user info object
     let userData = {
@@ -39,11 +41,24 @@ $(document).ready(function () {
       usercity: usercity,
       userState: userState,
       userZip: userZip,
+      adSub: adSub,
+      comment: comment
+
     }//end of userData Object
 
     //push information to the database
     database.ref().child("/users/user" + counter++).set(userData);
     
+    $("#inputUserName4").val();
+    $("#inputInstrument4").val();
+    $("#inputAddress").val();
+    $("#inputAddress2").val();
+    $("#inputCity").val();
+    $("#inputState").val();
+    $("#inputZip").val();
+    $("#ad-subject").val();
+    $("#comments").val();
+
   });//end of sign in listner
 
 });//end of document.ready
