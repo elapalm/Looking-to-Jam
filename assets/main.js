@@ -62,10 +62,29 @@ $(document).ready(function () {
   });//end of sign in listner
 
 
-  //databaselistern
+  //database listener when a user is added to the database
   database.ref("/users/").on("child_added",function(snapshot){
-    console.log(snapshot.val());
-    console.log(snapshot.val().userName);
+    
+    //created needed divs
+    let newRow = $("<div>");
+    let newFormDiv = $("<div>");
+    let newuserNameDiv = $("<div>");
+
+    //Added classes for bootstrap    
+    newRow.attr("class", "row formPost");
+    newFormDiv.attr("class", "col-sm-9");
+    newuserNameDiv.attr("class", "col-sm-3");
+
+    //pull data need to post to the data base.
+    newFormDiv.html("<h4>" + snapshot.val().adSub + "</h4> <hr> <p>" +snapshot.val().comment +"</p>");
+    newuserNameDiv.html("<h4>" +snapshot.val().userName + "</h4>");
+
+    //append col to the row that will be added to the page
+    newRow.append(newFormDiv);
+    newRow.append(newuserNameDiv);
+
+    //Add the forum to landing page.
+    $(".forum").append(newRow);
 
   });
 
