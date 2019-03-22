@@ -21,20 +21,7 @@
     <!--nav bar-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Looking to Jam
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider">llllll</div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>
-            </ul>
+            <a class="navbar-brand" href="#">Looking To Jam</a>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -42,41 +29,21 @@
         </div>
     </nav>
     <!-- Navbar ending -->
-    <!-- Map-->
-    <!--Form-->
+   
+    
     <div class="container main">
         <div class="row">
+             <!-- Map-->
             <div class="col-sm-7 map" id="map"></div>
-            <div class="col-sm-5 forum">
-               
-            </div>
-
-
-
+            <!--Form-->
+            <div class="col-sm-5 forum"></div>
         </div>
-
-
     </div>
-
-
-    
 </body>
-<script>
-//     var map;
-// function initMap() {
-//     map = new google.maps.Map(document.getElementById('map'), {
-//         center: { lat: 32.2226, lng: -110.9747},
-//         zoom: 12
-//     });
-// }
-</script>
 
-
-
+<!-- jquery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- bootStrap -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
 integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
 crossorigin="anonymous"></script>
@@ -85,15 +52,12 @@ integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07j
 crossorigin="anonymous"></script>
 <!-- Linking JS File -->
 <script src="assets/main.js"></script>
-<script src="assets/gmaps.js"></script>
+<script src="assets/gmapsAPP.js"></script>
+<script src="assets/profilePageApp.js"></script>
 <!-- linking in firebase -->
 <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=MY_API_KEY&callback=initMap"
     async defer></script>
-
-
-
-
 
 </html>
