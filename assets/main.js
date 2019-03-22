@@ -88,4 +88,23 @@ $(document).ready(function () {
 
   });
 
+  let address = "3135 N Palo Verde Ave, Tucson AZ";
+
+  testURL = "https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyDTD77T70LdIBZsEwh1nXNqGor3B0oQbYk";
+
+queryURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyDTD77T70LdIBZsEwh1nXNqGor3B0oQbYk";
+
+console.log(queryURL);
+
+$.ajax({
+    url: queryURL,
+    method: "GET"
+})
+    .then(function (response) {
+        let results = response;
+
+        console.log(results);
+        
+    });
+
 });//end of document.ready
