@@ -49,16 +49,24 @@ $(document).ready(function () {
     //push information to the database
     database.ref().child("/users/user" + counter++).set(userData);
     
-    $("#inputUserName4").val();
-    $("#inputInstrument4").val();
-    $("#inputAddress").val();
-    $("#inputAddress2").val();
-    $("#inputCity").val();
-    $("#inputState").val();
-    $("#inputZip").val();
-    $("#ad-subject").val();
-    $("#comments").val();
+    $("#inputUserName4").val("");
+    $("#inputInstrument4").val("");
+    $("#inputAddress").val("");
+    $("#inputAddress2").val("");
+    $("#inputCity").val("");
+    $("#inputState").val("");
+    $("#inputZip").val("");
+    $("#ad-subject").val("");
+    $("#comments").val("");
 
   });//end of sign in listner
+
+
+  //databaselistern
+  database.ref("/users/").on("child_added",function(snapshot){
+    console.log(snapshot.val());
+    console.log(snapshot.val().userName);
+
+  });
 
 });//end of document.ready
