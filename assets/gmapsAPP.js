@@ -11,6 +11,8 @@ function initMap() {
     // The marker, positioned at tucson
     var marker = new google.maps.Marker({position: tucson, map: map});
 
+    console.log(latArr);
+    console.log(LngArr);
     
 
   }

@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  loadGoogleAPI();
 
   // Initialize Firebase
   var config = {
@@ -14,14 +15,16 @@ $(document).ready(function () {
 
   //database variable
   const database = firebase.database();
-  let counter = 0;
+
+  //local address array to store address for the goeApi
+  let latArr = [];
+  let LngArr = [];
+
   // user sign in listner
   $("#sign-in").on("click", function (event) {
     event.preventDefault();
 
     //user values
-
-
     let userName = $("#inputUserName4").val().trim();
     let instrument = $("#inputInstrument4").val().trim();
     let addressMain = $("#inputAddress").val().trim();
@@ -47,11 +50,11 @@ $(document).ready(function () {
     }//end of userData Object
 
     //push information to the database    
-     // Get a key for the new users entry
-     var userKey = database.ref().child("/user/").push().key;
+    // Get a key for the new users entry
+    var userKey = database.ref().child("/user/").push().key;
 
-     //push information to the database
-     database.ref("/user/" + userKey).set(userData);
+    //push information to the database
+    database.ref("/user/" + userKey).set(userData);
 
     $("#inputUserName4").val("");
     $("#inputInstrument4").val("");
@@ -68,7 +71,7 @@ $(document).ready(function () {
 
   //database listener when a user is added to the database
   database.ref("/user/").on("child_added", function (snapshot) {
-   
+
 
     //created needed divs
     let newRow = $("<div>");
@@ -94,47 +97,95 @@ $(document).ready(function () {
   });
 
   //Used to retrieve the address from the database
-  database.ref("user").on("value", function(snapshot){
-    if(snapshot.val() != null){
+  database.ref("user").on("value", function (snapshot) {
+    if (snapshot.val() != null) {
       let data = snapshot.val();
       let keys = Object.keys(data);
 
-      for(let i in keys){
+      for (let i in keys) {
         let k = keys[i];
-        let address = data[k].addressMain + ", " + data[k].usercity + " "+ data[k].userState;
-        console.log(address);
+        let address = data[k].addressMain + ", " + data[k].usercity + " " + data[k].userState;
+        //addressArr.push(address);
+        getLatAndLng(address)
+
       }
-      
 
     }
-    else{
+    else {
       console.log("Error, data base is empty.");
     }
-      
+
+
   });
-
   //Google geolocation API
-  let address = "3135 N Palo Verde Ave, Tucson AZ";
 
-  queryURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyDTD77T70LdIBZsEwh1nXNqGor3B0oQbYk";
 
-  $.ajax({
-    url: queryURL,
-    method: "GET"
-  })
-    .then(function (response) {
-      let lat = response.results[0].geometry.location.lat;
+  function getLatAndLng(str) {
+    let address = str;
+    queryURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyDTD77T70LdIBZsEwh1nXNqGor3B0oQbYk";
 
-      let lng = response.results[0].geometry.location.lng;
-
-      console.log("Lat: " + lat + " Lng: " + lng);
-
+    $.ajax({
+      url: queryURL,
+      method: "GET"
     })
-    .catch(function(error){
-      console.log(error);
-    });
+      .then(function (response) {
+        let lat = response.results[0].geometry.location.lat;
+        let lng = response.results[0].geometry.location.lng;
 
- 
+        latArr.push(lat);
+        LngArr.push(lng);
+
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+  waitingForGoogle();
+
+  function waitingForGoogle() {
+    setTimeout(function () {
+      initMap();
+    }, 10000);
+  }
+
+
+
+
+
+  function initMap() {
+    let marker;
+    console.log(latArr[0]);
+    console.log(LngArr[0]);
+
+
+    //geocoder = new google.maps.Geocoder();
+    // The location of tucson
+    var tucson = { lat: 32.2226, lng: -110.9747 }
+    // The map, centered at tucson
+    var map = new google.maps.Map(
+      document.getElementById('map'), { zoom: 12, center: tucson });
+
+    for (let i in latArr) {
+      let cord = { lat: latArr[i], lng: LngArr[i] };
+
+      // The marker, positioned at tucson
+      marker = new google.maps.Marker({ position: cord, map: map });
+    }
+
+
+
+
+
+
+  }
+
+  function loadGoogleAPI() {
+    let googleAPILink = $("<script>");
+    googleAPILink.attr("type", "text/javascript");
+    googleAPILink.attr("src", "https://maps.googleapis.com/maps/api/js?key=AIzaSyDTD77T70LdIBZsEwh1nXNqGor3B0oQbYk");
+    $("head").append(googleAPILink);
+  }
+
 
 
 });//end of document.ready
