@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  //loadGmapAPI();
+  loadGmapAPI();
 
   // Initialize Firebase
   var config = {
@@ -17,6 +17,7 @@ $(document).ready(function () {
   const database = firebase.database();
   let latArr = [];
   let lngArr = [];
+  let userNameArr = [];
   // user sign in listner
   $("#sign-in").on("click", function (event) {
     event.preventDefault();
@@ -105,6 +106,7 @@ $(document).ready(function () {
         let k = keys[i];
         let address = data[k].addressMain + ", " + data[k].usercity + " " + data[k].userState;
         addresToLatLng(address);
+        userNameArr.push(data[k].userName);
       }
 
 
@@ -171,6 +173,7 @@ $(document).ready(function () {
       var marker = new google.maps.Marker({
         position: userLatLng,
         map: map,
+        title: userNameArr[i]
       });
 
     }
