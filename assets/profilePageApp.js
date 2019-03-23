@@ -45,7 +45,7 @@ $(document).ready(function () {
       $('.my-button2').click(function() {
         $(".button").focus()
       });
-    
+    */
 
     
-});//end of document.ready
+});//end of document.ready 
