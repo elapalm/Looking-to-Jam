@@ -17,6 +17,7 @@ $(document).ready(function () {
   const database = firebase.database();
   let latArr = [];
   let lngArr = [];
+  let userNameArr = [];
   // user sign in listner
   $("#sign-in").on("click", function (event) {
     event.preventDefault();
@@ -84,7 +85,7 @@ $(document).ready(function () {
 
     //pull data need to post to the data base.
     newFormDiv.html("<h4>" + snapshot.val().adSub + "</h4> <hr> <p>" + snapshot.val().comment + "</p>");
-    newuserNameDiv.html("<h4>" + snapshot.val().userName + "</h4>");
+    newuserNameDiv.html("<h4><a href='userProPage.html'>" + snapshot.val().userName + "</a></h4>");
 
     //append col to the row that will be added to the page
     newRow.append(newFormDiv);
@@ -95,27 +96,6 @@ $(document).ready(function () {
 
   });
 
-<<<<<<< HEAD
-  let address = "3135 N Palo Verde Ave, Tucson AZ";
-
-  testURL = "https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyDTD77T70LdIBZsEwh1nXNqGor3B0oQbYk";
-
-queryURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyDTD77T70LdIBZsEwh1nXNqGor3B0oQbYk";
-
-console.log(queryURL);
-
-$.ajax({
-    url: queryURL,
-    method: "GET"
-})
-    .then(function (response) {
-        let results = response;
-
-        console.log(results);
-        
-    });
-
-=======
   //Used to retrieve the address from the database
   database.ref("user").on("value", function (snapshot) {
     if (snapshot.val() != null) {
@@ -126,6 +106,7 @@ $.ajax({
         let k = keys[i];
         let address = data[k].addressMain + ", " + data[k].usercity + " " + data[k].userState;
         addresToLatLng(address);
+        userNameArr.push(data[k].userName);
       }
 
 
@@ -134,6 +115,10 @@ $.ajax({
       console.log("Error, data base is empty.");
     }
 
+  });
+
+  $(document).on("click", ".login", function(){
+    console.log("clicked");
   });
 
 
@@ -188,6 +173,7 @@ $.ajax({
       var marker = new google.maps.Marker({
         position: userLatLng,
         map: map,
+        title: userNameArr[i]
       });
 
     }
@@ -208,5 +194,4 @@ $.ajax({
 
 
 
->>>>>>> master
 });//end of document.ready
