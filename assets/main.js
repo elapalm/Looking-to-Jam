@@ -46,8 +46,12 @@ $(document).ready(function () {
 
     }//end of userData Object
 
-    //push information to the database
-    database.ref().child("/users/user" + counter++).set(userData);
+    //push information to the database    
+     // Get a key for the new users entry
+     var userKey = database.ref().child("/user/").push().key;
+
+     //push information to the database
+     database.ref("/user/" + userKey).set(userData);
 
     $("#inputUserName4").val("");
     $("#inputInstrument4").val("");
@@ -63,7 +67,8 @@ $(document).ready(function () {
 
 
   //database listener when a user is added to the database
-  database.ref("/users/").on("child_added", function (snapshot) {
+  database.ref("/user/").on("child_added", function (snapshot) {
+   
 
     //created needed divs
     let newRow = $("<div>");
@@ -86,6 +91,26 @@ $(document).ready(function () {
     //Add the forum to landing page.
     $(".forum").append(newRow);
 
+  });
+
+  //Used to retrieve the address from the database
+  database.ref("user").on("value", function(snapshot){
+    if(snapshot.val() != null){
+      let data = snapshot.val();
+      let keys = Object.keys(data);
+
+      for(let i in keys){
+        let k = keys[i];
+        let address = data[k].addressMain + ", " + data[k].usercity + " "+ data[k].userState;
+        console.log(address);
+      }
+      
+
+    }
+    else{
+      console.log("Error, data base is empty.");
+    }
+      
   });
 
   //Google geolocation API
