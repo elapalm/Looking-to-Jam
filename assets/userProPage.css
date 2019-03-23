@@ -2,6 +2,46 @@ body{
     background: #decbb7;
     font-family: 'Roboto', condensed;
 }
-.nav{
+.navbar{
     background: #433633;
 }
+
+.userMain{
+   
+    position: relative;
+    top: 30px;
+
+}
+
+.userHeader{
+    height: 170px;
+    background: #ffffff;
+    border: #433633 solid 2px;
+    box-shadow: 6px 6px 3px grey;
+}
+
+.userHeader img{
+    position: relative;
+    top: 10px;
+}
+
+.userHeader h3{
+    position: relative;
+    top: 10px;
+}
+
+.userBody{
+    position: relative;
+    top: 10px;
+    height: 430px;
+    background: #ffffff;
+    border: #433633 solid 2px;
+    box-shadow: 6px 6px 3px grey;
+}
+
+.userBody h3{
+    margin-top: 10px;
+}
+
+
+
