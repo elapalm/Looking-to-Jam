@@ -154,9 +154,6 @@ $(document).ready(function () {
 
   function initMap() {
     let marker;
-    console.log(latArr[0]);
-    console.log(LngArr[0]);
-
 
     //geocoder = new google.maps.Geocoder();
     // The location of tucson
@@ -172,11 +169,6 @@ $(document).ready(function () {
       marker = new google.maps.Marker({ position: cord, map: map });
     }
 
-
-
-
-
-
   }
 
   function loadGoogleAPI() {
@@ -185,7 +177,5 @@ $(document).ready(function () {
     googleAPILink.attr("src", "https://maps.googleapis.com/maps/api/js?key=AIzaSyDTD77T70LdIBZsEwh1nXNqGor3B0oQbYk");
     $("head").append(googleAPILink);
   }
-
-
 
 });//end of document.ready
