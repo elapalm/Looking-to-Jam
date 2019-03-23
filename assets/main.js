@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  loadGoogleAPI();
+  loadGmapAPI();
 
   // Initialize Firebase
   var config = {
@@ -15,16 +15,15 @@ $(document).ready(function () {
 
   //database variable
   const database = firebase.database();
-
-  //local address array to store address for the goeApi
   let latArr = [];
-  let LngArr = [];
-
+  let lngArr = [];
   // user sign in listner
   $("#sign-in").on("click", function (event) {
     event.preventDefault();
 
     //user values
+
+
     let userName = $("#inputUserName4").val().trim();
     let instrument = $("#inputInstrument4").val().trim();
     let addressMain = $("#inputAddress").val().trim();
@@ -105,23 +104,24 @@ $(document).ready(function () {
       for (let i in keys) {
         let k = keys[i];
         let address = data[k].addressMain + ", " + data[k].usercity + " " + data[k].userState;
-        //addressArr.push(address);
-        getLatAndLng(address)
-
+        addresToLatLng(address);
       }
+
 
     }
     else {
       console.log("Error, data base is empty.");
     }
 
-
   });
-  //Google geolocation API
 
 
-  function getLatAndLng(str) {
+
+  function addresToLatLng(str) {
+
+    //Google geolocation API
     let address = str;
+
     queryURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyDTD77T70LdIBZsEwh1nXNqGor3B0oQbYk";
 
     $.ajax({
@@ -130,52 +130,61 @@ $(document).ready(function () {
     })
       .then(function (response) {
         let lat = response.results[0].geometry.location.lat;
+
         let lng = response.results[0].geometry.location.lng;
 
-        latArr.push(lat);
-        LngArr.push(lng);
+        console.log(lat);
+        console.log(lng);
 
+        latArr.push(lat);
+        lngArr.push(lng);
       })
       .catch(function (error) {
         console.log(error);
       });
-  }
-  waitingForGoogle();
 
-  function waitingForGoogle() {
+  }
+
+  waitingOnGoogle();
+
+  function waitingOnGoogle() {
     setTimeout(function () {
       initMap();
-    }, 10000);
-  }
+    }, 15000);
+}
 
 
 
-
-
+  var map;
   function initMap() {
-    let marker;
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: { lat: 32.2226, lng: -110.9747 },
+      zoom: 12
+    });
 
-    //geocoder = new google.maps.Geocoder();
-    // The location of tucson
-    var tucson = { lat: 32.2226, lng: -110.9747 }
-    // The map, centered at tucson
-    var map = new google.maps.Map(
-      document.getElementById('map'), { zoom: 12, center: tucson });
+    for(let i in latArr){
+      var userLatLng = {lat: latArr[i], lng: lngArr[i]};
+      var marker = new google.maps.Marker({
+        position: userLatLng,
+        map: map,
+      });
 
-    for (let i in latArr) {
-      let cord = { lat: latArr[i], lng: LngArr[i] };
-
-      // The marker, positioned at tucson
-      marker = new google.maps.Marker({ position: cord, map: map });
     }
+    
+  
+  }
+
+  function loadGmapAPI() {
+    console.log("a");
+    let newScript = $("<script>");
+    newScript.attr("type", "text/javascript");
+    newScript.attr("src", "https://maps.googleapis.com/maps/api/js?key=AIzaSyDTD77T70LdIBZsEwh1nXNqGor3B0oQbYk");
+
+    $("head").append(newScript);
 
   }
 
-  function loadGoogleAPI() {
-    let googleAPILink = $("<script>");
-    googleAPILink.attr("type", "text/javascript");
-    googleAPILink.attr("src", "https://maps.googleapis.com/maps/api/js?key=AIzaSyDTD77T70LdIBZsEwh1nXNqGor3B0oQbYk");
-    $("head").append(googleAPILink);
-  }
+
+
 
 });//end of document.ready
