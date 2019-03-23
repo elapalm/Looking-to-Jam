@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  loadGmapAPI();
 
   // Initialize Firebase
   var config = {
@@ -14,7 +15,8 @@ $(document).ready(function () {
 
   //database variable
   const database = firebase.database();
-  let counter = 0;
+  let latArr = [];
+  let lngArr = [];
   // user sign in listner
   $("#sign-in").on("click", function (event) {
     event.preventDefault();
@@ -47,11 +49,11 @@ $(document).ready(function () {
     }//end of userData Object
 
     //push information to the database    
-     // Get a key for the new users entry
-     var userKey = database.ref().child("/user/").push().key;
+    // Get a key for the new users entry
+    var userKey = database.ref().child("/user/").push().key;
 
-     //push information to the database
-     database.ref("/user/" + userKey).set(userData);
+    //push information to the database
+    database.ref("/user/" + userKey).set(userData);
 
     $("#inputUserName4").val("");
     $("#inputInstrument4").val("");
@@ -68,7 +70,7 @@ $(document).ready(function () {
 
   //database listener when a user is added to the database
   database.ref("/user/").on("child_added", function (snapshot) {
-   
+
 
     //created needed divs
     let newRow = $("<div>");
@@ -115,47 +117,95 @@ $.ajax({
 
 =======
   //Used to retrieve the address from the database
-  database.ref("user").on("value", function(snapshot){
-    if(snapshot.val() != null){
+  database.ref("user").on("value", function (snapshot) {
+    if (snapshot.val() != null) {
       let data = snapshot.val();
       let keys = Object.keys(data);
 
-      for(let i in keys){
+      for (let i in keys) {
         let k = keys[i];
-        let address = data[k].addressMain + ", " + data[k].usercity + " "+ data[k].userState;
-        console.log(address);
+        let address = data[k].addressMain + ", " + data[k].usercity + " " + data[k].userState;
+        addresToLatLng(address);
       }
-      
+
 
     }
-    else{
+    else {
       console.log("Error, data base is empty.");
     }
-      
+
   });
 
-  //Google geolocation API
-  let address = "3135 N Palo Verde Ave, Tucson AZ";
 
-  queryURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyDTD77T70LdIBZsEwh1nXNqGor3B0oQbYk";
 
-  $.ajax({
-    url: queryURL,
-    method: "GET"
-  })
-    .then(function (response) {
-      let lat = response.results[0].geometry.location.lat;
+  function addresToLatLng(str) {
 
-      let lng = response.results[0].geometry.location.lng;
+    //Google geolocation API
+    let address = str;
 
-      console.log("Lat: " + lat + " Lng: " + lng);
+    queryURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyDTD77T70LdIBZsEwh1nXNqGor3B0oQbYk";
 
+    $.ajax({
+      url: queryURL,
+      method: "GET"
     })
-    .catch(function(error){
-      console.log(error);
+      .then(function (response) {
+        let lat = response.results[0].geometry.location.lat;
+
+        let lng = response.results[0].geometry.location.lng;
+
+        console.log(lat);
+        console.log(lng);
+
+        latArr.push(lat);
+        lngArr.push(lng);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+  }
+
+  waitingOnGoogle();
+
+  function waitingOnGoogle() {
+    setTimeout(function () {
+      initMap();
+    }, 15000);
+}
+
+
+
+  var map;
+  function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: { lat: 32.2226, lng: -110.9747 },
+      zoom: 12
     });
 
- 
+    for(let i in latArr){
+      var userLatLng = {lat: latArr[i], lng: lngArr[i]};
+      var marker = new google.maps.Marker({
+        position: userLatLng,
+        map: map,
+      });
+
+    }
+    
+  
+  }
+
+  function loadGmapAPI() {
+    console.log("a");
+    let newScript = $("<script>");
+    newScript.attr("type", "text/javascript");
+    newScript.attr("src", "https://maps.googleapis.com/maps/api/js?key=AIzaSyDTD77T70LdIBZsEwh1nXNqGor3B0oQbYk");
+
+    $("head").append(newScript);
+
+  }
+
+
 
 
 >>>>>>> master
